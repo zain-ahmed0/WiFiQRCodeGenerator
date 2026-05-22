@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/dependabot.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/">
+    <File Path="docs/README.md" />
+    <File Path="docs/TODO.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj" />
+  </Folder>
+</Solution>
