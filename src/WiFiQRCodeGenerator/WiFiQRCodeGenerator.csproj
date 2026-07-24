@@ -9,9 +9,9 @@
 
     <ItemGroup>
         <PackageReference Include="QRCoder" />
-        <PackageReference Include="SixLabors.Fonts" />
-        <PackageReference Include="SixLabors.ImageSharp" />
-        <PackageReference Include="SixLabors.ImageSharp.Drawing" />
+        <PackageReference Include="SkiaSharp" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux" />
+        <PackageReference Include="SkiaSharp.NativeAssets.macOS" />
         <PackageReference Include="System.CommandLine" />
     </ItemGroup>
 
