@@ -3,6 +3,7 @@
     <File Path=".gitignore" />
     <File Path="Directory.Packages.props" />
     <File Path="LICENSE" />
+    <File Path="Makefile" />
   </Folder>
   <Folder Name="/Solution Items/.github/">
     <File Path=".github/dependabot.yml" />
