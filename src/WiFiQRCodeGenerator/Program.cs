@@ -82,11 +82,12 @@ public static class WifiQrCodeGenerator
             canvas.DrawText(wifiText, new SKPoint(canvasCenterX - wifiTextWidth / 2f, textY), font, paint);
 
             canvas.DrawText(passwordText, new SKPoint(canvasCenterX - passwordTextWidth / 2f, textY + 50), font, paint);
-
-            Directory.CreateDirectory("output");
+            
             using var image = surface.Snapshot();
             using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-            File.WriteAllBytes($"output/{wifi}-qrcode.png", data.ToArray());
+            
+            var currentDirectory = Directory.GetCurrentDirectory();
+            File.WriteAllBytes(Path.Combine(currentDirectory, $"{wifi}-qrcode.png"), data.ToArray());
             Console.WriteLine($"Outputted to: {Directory.GetCurrentDirectory()}");
 
             // canvas.DrawText(password, padding, textY + 50, paint);
