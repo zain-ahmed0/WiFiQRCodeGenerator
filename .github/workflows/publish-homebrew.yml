@@ -88,17 +88,17 @@ jobs:
           SHA_X64=$(shasum -a 256 wqr-osx-x64.tar.gz | awk '{print $1}')
           SHA_LINUX=$(shasum -a 256 wqr-linux-x64.tar.gz | awk '{print $1}')
           VERSION=${GITHUB_REF_NAME#v}
-
+          
           sed -i '' "s/version \".*\"/version \"${VERSION}\"/" homebrew/wqr.rb
           sed -i '' "s|releases/download/.*/wqr-osx-arm64|releases/download/v${VERSION}/wqr-osx-arm64|" homebrew/wqr.rb
           sed -i '' "s|releases/download/.*/wqr-osx-x64|releases/download/v${VERSION}/wqr-osx-x64|" homebrew/wqr.rb
           sed -i '' "s|releases/download/.*/wqr-linux-x64|releases/download/v${VERSION}/wqr-linux-x64|" homebrew/wqr.rb
-          sed -i '' "s/sha256 \"PLACEHOLDER\"/sha256 \"${SHA_ARM64}\"/" homebrew/wqr.rb
-          sed -i '' "s/sha256 \"PLACEHOLDER\"/sha256 \"${SHA_X64}\"/" homebrew/wqr.rb
-          sed -i '' "s/sha256 \"PLACEHOLDER\"/sha256 \"${SHA_LINUX}\"/" homebrew/wqr.rb
-
+          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_ARM64}\"/" homebrew/wqr.rb
+          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_X64}\"/" homebrew/wqr.rb
+          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_LINUX}\"/" homebrew/wqr.rb
+          
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git add homebrew/wqr.rb
-          git commit -m "Update wqr formula to ${VERSION}"
+          git diff --staged --quiet || git commit -m "Update wqr formula to ${VERSION}"
           git push
