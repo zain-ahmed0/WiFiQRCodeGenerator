@@ -1,6 +1,6 @@
 # wqr — WiFi QR Code Generator
 
-A CLI/TUI tool that generates a QR code for your WiFi network credentials.
+A CLI/TUI tool that generates a QR code for your WiFi network.
 
 ## Background
 
