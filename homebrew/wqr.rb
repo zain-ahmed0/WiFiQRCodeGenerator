@@ -6,16 +6,16 @@ class Wqr < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.0/wqr-osx-arm64.tar.gz"
-      sha256 "9f89edc2e5cb25493e7e51cc2dd907cdabfeba7a60071ca2baf2ae289c8cb921"
+      sha256 "9fa59c11094edf3b858d2a8a8f1388e4e3c893f966b3cd9cdd355e4b13e20a76"
     else
       url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.0/wqr-osx-x64.tar.gz"
-      sha256 "9f89edc2e5cb25493e7e51cc2dd907cdabfeba7a60071ca2baf2ae289c8cb921"
+      sha256 "9fa59c11094edf3b858d2a8a8f1388e4e3c893f966b3cd9cdd355e4b13e20a76"
     end
   end
 
   on_linux do
     url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.0/wqr-linux-x64.tar.gz"
-    sha256 "9f89edc2e5cb25493e7e51cc2dd907cdabfeba7a60071ca2baf2ae289c8cb921"
+    sha256 "9fa59c11094edf3b858d2a8a8f1388e4e3c893f966b3cd9cdd355e4b13e20a76"
   end  
 
   def install
