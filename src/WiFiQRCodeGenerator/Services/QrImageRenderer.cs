@@ -5,43 +5,39 @@ namespace WifiQRCodeGenerator.Services;
 
 public static class QrImageRenderer
 {
-    public static void Render(byte[] qrBytes, WiFiCredentials credentials)
+    private const int Padding = 50;
+    private const int TextAreaHeight = 120;
+    private const int FontSize = 40;
+    private const int LineSpacing = 50;
+    
+    public static string Render(byte[] qrBytes, WiFiCredentials credentials)
     {
         using var qrBitmap = SKBitmap.Decode(qrBytes);
-
-        int padding = 50;
-        int textHeight = 120;
-        int canvasWidth = qrBitmap.Width + padding * 2;
-        int canvasHeight = qrBitmap.Height + padding * 2 + textHeight;
+        
+        int canvasWidth = qrBitmap.Width + Padding * 2;
+        int canvasHeight = qrBitmap.Height + Padding * 2 + TextAreaHeight;
         
         using var bitmap = new SKBitmap(canvasWidth, canvasHeight);
         using var canvas = new SKCanvas(bitmap);
         
         canvas.Clear(SKColors.White);
-        canvas.DrawBitmap(qrBitmap, new SKPoint(padding, padding), new SKSamplingOptions());
+        canvas.DrawBitmap(qrBitmap, new SKPoint(Padding, Padding), new SKSamplingOptions());
         
-        using var font = new SKFont { Size = 40, Typeface = SKTypeface.Default };
+        using var font = new SKFont { Size = FontSize, Typeface = SKTypeface.Default };
         using var paint = new SKPaint { Color = SKColors.Black, IsAntialias = true };
         
-        float canvasCenterX = canvasWidth / 2f;
+        float centerX = canvasWidth / 2f;
+        float textY = qrBitmap.Height + Padding + LineSpacing;
 
-        string wifiText = $"Name: {credentials.Name}";
-        string passwordText = $"Password: {credentials.Password}";
-
-        float wifiTextWidth = font.MeasureText(wifiText, paint);
-        float passwordTextWidth = font.MeasureText(passwordText, paint);
-
-        float textY = qrBitmap.Height + padding + 50;
-
-        canvas.DrawText(wifiText, new SKPoint(canvasCenterX - wifiTextWidth / 2f, textY), SKTextAlign.Left, font, paint);
-        canvas.DrawText(passwordText, new SKPoint(canvasCenterX - passwordTextWidth / 2f, textY + 50), SKTextAlign.Left, font, paint);
+        canvas.DrawText($"Name: {credentials.Name}", new SKPoint(centerX, textY), SKTextAlign.Center, font, paint);
+        canvas.DrawText($"Password: {credentials.Password}", new SKPoint(centerX, textY + LineSpacing), SKTextAlign.Center, font, paint);
 
         using var image = SKImage.FromBitmap(bitmap);
         using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-
-        var currentDirectory = Directory.GetCurrentDirectory();
-        var outputPath = Path.Combine(currentDirectory, $"{credentials.Name}-qrcode.png");
+        
+        var outputPath = Path.Combine(Directory.GetCurrentDirectory(), $"{credentials.Name}-qrcode.png");
         File.WriteAllBytes(outputPath, data.ToArray());
-        Console.WriteLine($"Outputted to: {outputPath}");
+        
+        return outputPath;
     }
 }

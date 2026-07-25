@@ -6,6 +6,7 @@ namespace WifiQRCodeGenerator.Services;
 
 public static class QrCodeService
 {
+    private const int GraphicPixelNumber = 20;
     public static byte[] Generate(WiFiCredentials credentials)
     {
         var authType = credentials.Auth switch
@@ -22,6 +23,6 @@ public static class QrCodeService
 
         using var pngRenderer = new PngByteQRCode(qrCodeData);
 
-        return pngRenderer.GetGraphic(20);
+        return pngRenderer.GetGraphic(GraphicPixelNumber);
     }
 }

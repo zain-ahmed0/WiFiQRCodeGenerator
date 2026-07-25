@@ -90,7 +90,7 @@ public static class GenerateCommand
         try
         {
             var qrBytes = QrCodeService.Generate(credentials);
-            QrImageRenderer.Render(qrBytes, credentials);
+            var outputPath = QrImageRenderer.Render(qrBytes, credentials);
             AnsiConsole.MarkupLine("[green]✓[/] QR code generated");
             AnsiConsole.MarkupLine($"[blue]{Directory.GetCurrentDirectory()}[/]");
             return 0;
