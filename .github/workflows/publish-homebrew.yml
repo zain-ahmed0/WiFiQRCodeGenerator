@@ -23,6 +23,10 @@ jobs:
           dotnet publish src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj \
             -c Release -r osx-x64 --self-contained true \
             -o ./publish/osx-x64
+      - name: Rename binaries
+        run: |
+          mv ./publish/osx-arm64/WiFiQRCodeGenerator ./publish/osx-arm64/wqr
+          mv ./publish/osx-x64/WiFiQRCodeGenerator ./publish/osx-x64/wqr
       - name: Create tarballs
         run: |
           tar -czf wqr-osx-arm64.tar.gz -C ./publish/osx-arm64 wqr
@@ -48,6 +52,8 @@ jobs:
           dotnet publish src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj \
             -c Release -r linux-x64 --self-contained true \
             -o ./publish/linux-x64
+      - name: Rename binary
+        run: mv ./publish/linux-x64/WiFiQRCodeGenerator ./publish/linux-x64/wqr
       - name: Create tarball
         run: tar -czf wqr-linux-x64.tar.gz -C ./publish/linux-x64 wqr
       - name: Upload tarball
