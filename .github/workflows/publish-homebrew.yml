@@ -1,0 +1,57 @@
+name: Publish to Homebrew
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build osx-arm64
+        run: |
+          dotnet publish src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj \
+            -c Release -r osx-arm64 --self-contained true \
+            -o ./publish/osx-arm64
+
+      - name: Build osx-x64
+        run: |
+          dotnet publish src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj \
+            -c Release -r osx-x64 --self-contained true \
+            -o ./publish/osx-x64
+
+      - name: Create tarballs
+        run: |
+          tar -czf wqr-osx-arm64.tar.gz -C ./publish/osx-arm64 wqr
+          tar -czf wqr-osx-x64.tar.gz -C ./publish/osx-x64 wqr
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            wqr-osx-arm64.tar.gz
+            wqr-osx-x64.tar.gz
+
+      - name: Update Homebrew formula
+        run: |
+          SHA_ARM64=$(shasum -a 256 wqr-osx-arm64.tar.gz | awk '{print $1}')
+          SHA_X64=$(shasum -a 256 wqr-osx-x64.tar.gz | awk '{print $1}')
+          VERSION=${GITHUB_REF_NAME#v}
+
+          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" homebrew/wqr.rb
+          sed -i '' "s|releases/download/.*/wqr-osx-arm64|releases/download/v${VERSION}/wqr-osx-arm64|" homebrew/wqr.rb
+          sed -i '' "s|releases/download/.*/wqr-osx-x64|releases/download/v${VERSION}/wqr-osx-x64|" homebrew/wqr.rb
+          sed -i '' "s/sha256 \"PLACEHOLDER\"/sha256 \"${SHA_ARM64}\"/" homebrew/wqr.rb
+
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add homebrew/wqr.rb
+          git commit -m "Update wqr formula to ${VERSION}"
+          git push
