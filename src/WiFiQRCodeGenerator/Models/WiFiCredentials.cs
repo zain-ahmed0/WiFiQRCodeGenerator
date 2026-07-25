@@ -1,3 +1,3 @@
 namespace WifiQRCodeGenerator.Models;
 
-public record WiFiCredentials(string Name, string Password, string Auth = "WPA2");
+public record WiFiCredentials(string Name, string Password, AuthType Auth = AuthType.WPA2);

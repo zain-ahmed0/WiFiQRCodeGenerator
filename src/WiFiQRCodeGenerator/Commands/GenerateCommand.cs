@@ -7,8 +7,6 @@ namespace WifiQRCodeGenerator.Commands;
 
 public static class GenerateCommand
 {
-    private static readonly HashSet<string> ValidAuthTypes = ["WPA2", "WPA", "WEP", "NOPASS"];
-
     public static int Run(string[] args)
     {
         if (args.Length == 0)
@@ -20,10 +18,10 @@ public static class GenerateCommand
                 AnsiConsole.Prompt(new TextPrompt<string>("[white]Enter WiFi password:[/]").Validate(
                     value => !string.IsNullOrWhiteSpace(value), "[red]WiFi password cannot be empty.[/]"));
             var auth = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
+                new SelectionPrompt<AuthType>()
                     .Title("Select auth type:")
-                    .AddChoices("WPA2", "WPA", "WEP", "nopass")
-                    .UseConverter(choice => choice == "WPA2" ? "WPA2 (Default)" : choice));
+                    .AddChoices(Enum.GetValues<AuthType>())
+                    .UseConverter(choice => choice == AuthType.WPA2 ? "WPA2 (Default)" : choice.ToString()));
 
             var credentials = new WiFiCredentials(name, password, auth);
 
@@ -41,7 +39,7 @@ public static class GenerateCommand
         Option<string> passwordOption = new("--password", "-p")
         {
             Description =
-                "The security protocol used by the network. WPA2 is recommended for most modern routers (default: WPA2)",
+                "The security protocol used by the network. WPA2 is recommended for most modern routers (default: WPA2)"
         };
 
         Option<string> authOption = new("--auth", "-a")
@@ -72,14 +70,14 @@ public static class GenerateCommand
                 return 1;
             }
 
-            if (auth is null || !ValidAuthTypes.Contains(auth.ToUpper()))
+            if (auth is null || !Enum.TryParse<AuthType>(auth, ignoreCase: true, out var parsedAuth))
             {
                 AnsiConsole.MarkupLine(
-                    $"[red]Invalid auth type '[/]{auth}[red]'. Must be one of: WPA2, WPA, WEP, nopass[/]");
+                    $"[red]Invalid auth type '[/]{auth}[red]'. Must be one of: {string.Join(", ", Enum.GetNames<AuthType>())}[/]");
                 return 1;
             }
 
-            var credentials = new WiFiCredentials(name, password, auth);
+            var credentials = new WiFiCredentials(name, password, parsedAuth);
 
             return GenerateAndOutput(credentials);
         });

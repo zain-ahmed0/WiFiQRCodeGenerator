@@ -1,4 +1,5 @@
 using QRCoder;
+using Spectre.Console;
 using WifiQRCodeGenerator.Models;
 
 namespace WifiQRCodeGenerator.Services;
@@ -7,13 +8,13 @@ public static class QrCodeService
 {
     public static byte[] Generate(WiFiCredentials credentials)
     {
-        var authType = credentials.Auth.ToUpper() switch
+        var authType = credentials.Auth switch
         {
-            "WPA2" => PayloadGenerator.WiFi.Authentication.WPA2,
-            "WPA" => PayloadGenerator.WiFi.Authentication.WPA,
-            "WEP" => PayloadGenerator.WiFi.Authentication.WEP,
-            "NOPASS" => PayloadGenerator.WiFi.Authentication.nopass,
-            _ => PayloadGenerator.WiFi.Authentication.WPA2
+            AuthType.WPA2 => PayloadGenerator.WiFi.Authentication.WPA2,
+            AuthType.WPA => PayloadGenerator.WiFi.Authentication.WPA,
+            AuthType.WEP => PayloadGenerator.WiFi.Authentication.WEP,
+            AuthType.NOPASS => PayloadGenerator.WiFi.Authentication.nopass,
+            _ => throw new ArgumentOutOfRangeException(nameof(credentials.Auth), credentials.Auth, null)
         };
         
         var wifiPayload = new PayloadGenerator.WiFi(credentials.Name, credentials.Password, authType);
