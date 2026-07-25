@@ -19,4 +19,9 @@ jobs:
         run: dotnet pack src/WiFiQRCodeGenerator/WiFiQRCodeGenerator.csproj -c Release
 
       - name: Push to NuGet
-        run: dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      id-token: write
+      contents: read
