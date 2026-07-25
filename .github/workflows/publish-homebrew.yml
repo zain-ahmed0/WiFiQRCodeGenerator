@@ -93,9 +93,9 @@ jobs:
           sed -i '' "s|releases/download/.*/wqr-osx-arm64|releases/download/v${VERSION}/wqr-osx-arm64|" Formula/wqr.rb
           sed -i '' "s|releases/download/.*/wqr-osx-x64|releases/download/v${VERSION}/wqr-osx-x64|" Formula/wqr.rb
           sed -i '' "s|releases/download/.*/wqr-linux-x64|releases/download/v${VERSION}/wqr-linux-x64|" Formula/wqr.rb
-          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_ARM64}\"/" Formula/wqr.rb
-          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_X64}\"/" Formula/wqr.rb
-          sed -i '' "s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_LINUX}\"/" Formula/wqr.rb
+          sed -i '' "/wqr-osx-arm64/{n;s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_ARM64}\"/;}" Formula/wqr.rb
+          sed -i '' "/wqr-osx-x64/{n;s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_X64}\"/;}" Formula/wqr.rb
+          sed -i '' "/wqr-linux-x64/{n;s/sha256 \"[a-f0-9]*\"/sha256 \"${SHA_LINUX}\"/;}" Formula/wqr.rb
           
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
