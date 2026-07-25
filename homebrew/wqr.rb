@@ -13,6 +13,11 @@ class Wqr < Formula
     end
   end
 
+  on_linux do
+    url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.0/wqr-linux-x64.tar.gz"
+    sha256 "PLACEHOLDER"
+  end  
+
   def install
     bin.install "wqr"
   end
