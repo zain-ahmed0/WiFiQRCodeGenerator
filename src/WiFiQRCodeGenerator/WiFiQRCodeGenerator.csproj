@@ -6,7 +6,7 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>wqr</ToolCommandName>
         <PackageId>WifiQRCodeGenerator</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <ImplicitUsings>enable</ImplicitUsings>
