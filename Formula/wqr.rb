@@ -1,21 +1,21 @@
 class Wqr < Formula
   desc "Generate a QR code for your WiFi network"
   homepage "https://github.com/zain-ahmed0/WiFiQRCodeGenerator"
-  version "1.0.3"
+  version "1.0.4"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.3/wqr-osx-arm64.tar.gz"
-      sha256 "71028ba814fede945b7e2b2efd8231a2d6aff4309e09c97e91b4c661eb0341da"
+      url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.4/wqr-osx-arm64.tar.gz"
+      sha256 "a367d2955a0d40911d376f0eb6ae7e6b5a7f8c9d1b46dec167f3cefba84af744"
     else
-      url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.3/wqr-osx-x64.tar.gz"
-      sha256 "cf00928fbeadce716d8187c20bfbeb04a543e3419a6b3b7fbaf46b86bd4c1244"
+      url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.4/wqr-osx-x64.tar.gz"
+      sha256 "21751f78ef9379b2c57497b559a2d753a632df052ff55b6939387994e8da6a00"
     end
   end
 
   on_linux do
-    url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.3/wqr-linux-x64.tar.gz"
-    sha256 "06fe9affe48cce7cf9164ca058720220aef6c4594890ff4fa3cb773c7d7f89fd"
+    url "https://github.com/zain-ahmed0/WiFiQRCodeGenerator/releases/download/v1.0.4/wqr-linux-x64.tar.gz"
+    sha256 "239368598ba4fc7582581cc7556f12955e9cd917b7e30849883ae7fa5da8c445"
   end  
 
   def install
